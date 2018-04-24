@@ -33,7 +33,7 @@ body, html {
     position: relative;
 }
 
-.container {
+#container {
     position: absolute;
     top: 0;
     left: 0;
