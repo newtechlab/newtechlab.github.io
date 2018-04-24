@@ -11,9 +11,10 @@ var radar = function (container, data) {
         container.innerHtml = ""
         data.map((uni, i) => cUni(uni, i))
 
-        aX = animate(0, (x) => container.style.transform = "translateX("+x+"px) scale("+(1+x/1000)+")")
+        aX = animate(500, (x) => container.style.transform = "translateX("+x*0.1+"px) scale("+(1+x/100)+")")
         
-        zoom(0) // show the starting point
+        //aX.update(100)
+        //zoom(0) // show the starting point
 
         // Set up the animation we will be using
     }, cUni = (uni, i) => {
