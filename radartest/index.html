@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Rotrans demo</title>
+    <script src="api.js"></script>
     <script src="rotrans.js"></script>
     <script src="radar.js"></script>
     <link rel="stylesheet" href="style.css">
@@ -13,59 +14,15 @@
 <div id="container">
 </div>
 <script>
-    let data = [
-        [
-            {
-                name: "Cat 1",
-                id: "c1",
-                articles: [
-                    "Hej", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra"
-                ]
-            },
-            {
-                name: "Cat 2",
-                id: "c2",                
-                articles: [
-                    "Hej", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra"
-                ]
-            },
-            {
-                id: "c3",
-                name: "Cat 3",
-                articles: [
-                    "Hej", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra"
-                ]
-            }
-        ],
-        [
-            {
-                id: "c1",
-                name: "Cat 1",
-                articles: [
-                    "Hej", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra"
-                ]
-            },
-            {
-                id: "c2",
-                name: "Cat 2",
-                articles: [
-                    "Hej", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra"
-                ]
-            },
-            {
-                id: "c3",
-                name: "Cat 3",
-                articles: [
-                    "Hej", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra", "Två", "Tre", "Fyra"
-                ]
-            }
-        ]
-    ]
-    // Get the elements that are part
-    let cont = document.getElementById("container");
-    let r = radar(cont, data)
-    window.addEventListener("mousedown", function(){ r.goto(0)})
-    window.addEventListener("touchstart",function (){ r.goto(0)})
+    api.getall().then(data => {
+        console.log("data", data)
+        // Get the elements that are part
+        let cont = document.getElementById("container");
+        let r = radar(cont, data)
+        let i = 0
+        window.addEventListener("mousedown", function(){ i++; r.goto(i%2)})
+        window.addEventListener("touchstart",function (){ i++; r.goto(i%2)})
+    })
 </script>
 </body>
 </html>

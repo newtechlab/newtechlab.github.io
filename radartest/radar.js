@@ -1,40 +1,55 @@
 var radar = function (container, data) {
     var w, h;
-    var aX, aY, aS;
+    var anim;
 
-    var sr = 250;
-    var radius = 350;
-
+    var sr
+    var radius;
     var init = function() {
         w = window.innerWidth;
         h = window.innerHeight;
+        sr = 300;
+        radius = sr + 100;
+
         container.innerHtml = ""
+        // Create the sun we want to see
+        let sun = document.createElement("div")
+        sun.className = "sun"
+        sun.style.width = sr*2+"px"
+        sun.style.height = sr*2+"px"
+        container.appendChild(sun)
         data.map(function(uni, i) { cUni(uni, i)})
 
-        aX = animate(500, function(x) { container.style.transform = "translateX("+x*0.1+"px) scale("+(1+x/100)+")"})
-        
-        //aX.update(100)
-        //zoom(0) // show the starting point
-
-        // Set up the animation we will be using
+        anim = animate([0,0,2.5, 0], function(pos) {
+            container.style.transform = "rotate("+pos[3]+"deg) translateX("+pos[0]+"px) translateY("+pos[1]+"px) scale("+pos[2]+") "})
+        zoom(0)
     }, cUni = function(uni, i) {
         var n = document.createElement("div")
         n.className = "universe"
         uni.map(function(art){ cPlan(n, art)})
         var a = 180*i;
-        n.style.transform = "translateY(-"+radius+"px) rotate("+a+"deg) translateY("+radius+"px)"
+        n.style.transform = "translateX(-50%) rotate("+a+"deg) translateY("+radius+"px) "
         container.appendChild(n)
     }, cPlan = function(p, planet) {
         var n = document.createElement("div")
-        n.className = "planet"        
+        n.className = "planet"
+        // add the planet itself
+        let img = document.createElement("img")
+        img.src = api.host + "/api/icon/" + planet.id
+        img.className = "plan"
+        let txt = document.createElement("span")
+        txt.innerHTML = planet.name
+        txt.className = "name"
+        n.appendChild(img)
+        n.appendChild(txt)
+
         planet.articles.map(function(art){ cArt(n, art)})
         p.appendChild(n)
     }, cArt = function(p, art) {
         var n = document.createElement("div")
         n.className = "article"        
-        n.innerHTML = art + ""
+        n.innerHTML = art.name + ""
         var nn = document.createElement("img")
-        nn.src = "https://upload.wikimedia.org/wikipedia/commons/d/d2/Firefox_Logo%2C_2017.png"
+        nn.src = api.host + "/api/icon/" + art.id
         nn.width = 25
         nn.height = 25
         n.appendChild(nn)
@@ -42,8 +57,9 @@ var radar = function (container, data) {
     }, zoom = function(universe, planet, category){
         if(planet == undefined) {
             // movign between universes, figure out the target center position for this one.
-            var r = Math.random()*w
-            aX.update(r)
+            let y = -150*(Math.pow(-1, universe%2))
+            console.log(y)
+            anim.update([0,y, 1, 180*universe])
 
         } else {
             // TODO:
