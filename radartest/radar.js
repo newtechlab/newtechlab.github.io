@@ -7,6 +7,7 @@ var radar = function (container, data) {
 
     // fields for moon animations
     let moons = []
+    let planets = []
     let moon
     
     var sr
@@ -17,7 +18,7 @@ var radar = function (container, data) {
         sr = 300;
         radius = sr + 100;
         ps = 75;
-        ff = 0.15
+        ff = 0.2
 
         
 
@@ -43,19 +44,17 @@ var radar = function (container, data) {
 
         anim = animate([0,0,scale, 0, 0], function(pos) {
             container.style.transform = "scale("+pos[2]+") rotate("+pos[3]+"deg) translateX("+pos[0]+"px) translateY("+pos[1]+"px) "
-            // also update all the moons - TODO: put them 
             moons.map(it => {
-                it = it.dom
-                if(moon == undefined) {
-                    it.style.opacity = 0.0
+                if(it.p == moon) {
+                    it.dom.style.opacity = 0.001 + (1-0.001)*pos[4]
+                    it.div.style.opacity = 1.0 //1-pos[4]
                 } else {
-                    if(it.p == moon) {
-                        it.style.opacity = 1-pos[4]
-                    } else {
-                        it.style.opacity = pos[4]
-                    }    
-                }
+                    it.dom.style.opacity = 0.001 //1-pos[4]
+                    it.div.style.opacity = 1 - (1-0.001)*pos[4]//1-pos[4]
+                }    
+            
             })
+
         })
         zoom(0)
     }, cUni = function(uni, i) {
@@ -105,6 +104,7 @@ var radar = function (container, data) {
         moons.push({
             p: planet.id,
             dom: childs,
+            div: n,
         })
         layout(planet.articles)
         planet.articles.map(function(art){ cArt(childs, art)})
@@ -116,20 +116,27 @@ var radar = function (container, data) {
 
         let fx = w*ff*0.5 - w*ff*art.fuzz[0]
         let fy = w*ff*0.5 - w*ff*art.fuzz[1]
-        n.style.left = (art.col-1)*0.1*w/scale+fx/scale+"px"
-        n.style.top = (art.row*ps*1.5/scale)+fy/scale+"px"
-        n.className = "article"        
-        n.innerHTML = art.name + ""
-        var nn = document.createElement("img")
-        nn.src = api.host + "/api/icon/" + art.id
-        nn.width = ps/scale
-        nn.height = ps/scale
-        n.appendChild(nn)
+        n.style.left = (art.col-1)*0.3*w/scale+fx/scale+"px"
+        n.style.top = 40+(art.row*ps*1.5/scale)+fy/scale+"px"
+        n.className = "article"      
+        
+        let img = document.createElement("img")
+        img.src = api.host + "/api/icon/" + art.id
+        img.className = "plan"
+        img.id = art.id
+        img.width = ps/scale
+        img.height = ps/scale
+        let txt = document.createElement("span")
+        txt.innerHTML = art.name
+        txt.className = "name"
+        txt.style["font-size"] = 100/scale + "%"
+        n.appendChild(img)
+        n.appendChild(txt)
+
         p.appendChild(n)
     }, zoom = function(universe, planet){
         if(universe != undefined) {
             // movign between universes, figure out the target center position for this one.
-            moon = undefined
             let y = -150*(Math.pow(-1, universe%2))
             curUni = universe
             curPlan = undefined

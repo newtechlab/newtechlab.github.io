@@ -11,11 +11,11 @@ var animate = function(start, render, m, d) {
         d = 7
     var x = [...start], v = start.map(d => 0.0), tx = [...start];
     var draw
-    var ct = (new Date()).getTime()
+    var ct = Date.now()
     var drawing = false
     draw = function() {
         drawing = true
-        var now = (new Date()).getTime() 
+        var now = Date.now() 
         var dt = (now - ct)/1000.0
         ct = now
         var acc = tx.map((it, i) => (it - x[i])/m)
@@ -43,7 +43,7 @@ var animate = function(start, render, m, d) {
         update: function(target) {
             tx = target
             if(!drawing) {
-                ct = (new Date()).getTime()-10
+                ct = Date.now()-10*0
                 window.requestAnimationFrame(draw)
             }
         }
