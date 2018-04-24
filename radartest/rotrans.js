@@ -19,17 +19,20 @@ var animate = function(start, render, m, d) {
         var dt = (now - ct)/1000.0
         ct = now
         var acc = tx.map((it, i) => (it - x[i])/m)
-        let mdx = 0
+        let ok = true
         for(let i = 0; i < v.length; i++) {
             v[i] += acc[i]*dt - d*v[i]*dt
             x[i] += v[i]*dt
-            if(Math.abs(acc[i])>0.001 || Math.abs(v[i]) > mdx) {
-                mdx = Math.abs(v[i]*dt)
+            if(Math.abs(acc[i])<0.001 && Math.abs(v[i]) < 0.001) {
+               // mdx = Math.abs(v[i]*dt)
+            } else {
+                ok = false
             }
         }
         render(x)
-        if(mdx != 0 && mdx < 0.0001) {
+        if(ok) {
             drawing = false
+            console.log("stopped animation", x, tx)
             return
         }
         window.requestAnimationFrame(draw)

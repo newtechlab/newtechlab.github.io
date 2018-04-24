@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Rotrans demo</title>
+    <script src="layout.js"></script>
     <script src="api.js"></script>
     <script src="rotrans.js"></script>
     <script src="radar.js"></script>
@@ -19,9 +20,6 @@
         // Get the elements that are part
         let cont = document.getElementById("container");
         let r = radar(cont, data)
-        let i = 0
-        window.addEventListener("mousedown", function(){ i++; r.goto(i%2)})
-        window.addEventListener("touchstart",function (){ i++; r.goto(i%2)})
     })
 </script>
 </body>

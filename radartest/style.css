@@ -1,8 +1,8 @@
 
 body, html {
-    font-family: "Sans Serif";
-    background-color: black;
-    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #232122;
+    color: #ccc;
     padding: 0;
     margin: 0;
     overflow: hidden;
@@ -31,11 +31,20 @@ body, html {
 
 .sun {
     border-radius: 50%;
-    background-color: yellow;
+    background-color: #F3AE25;
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%,-50%);
+}
+
+.circles {
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    border: 1px solid #ccc
 }
 
 
@@ -52,11 +61,23 @@ body, html {
 }
 
 .planet {
-    position: relative;
+    position: absolute;
+    width: 100vw;
+}
+
+.planet span {
+    position: absolute;
+}
+
+.children {
+    position: absolute;
+    width: 100vw;
+    will-change: opacity;
 }
 
 .article {
-    position: relative;
+    width: 100vw;
+    position: absolute;
 }
 
 #container {
