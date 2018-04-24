@@ -33,7 +33,7 @@ var radar = function (container, data) {
         n.className = "article"        
         n.innerHTML = art + ""
         let nn = document.createElement("img")
-        nn.src = "https://upload.wikimedia.org/wikipedia/commons/6/67/Firefox_Logo%2C_2017.svg"
+        nn.src = "https://upload.wikimedia.org/wikipedia/commons/d/d2/Firefox_Logo%2C_2017.png"
         nn.width = 25
         nn.height = 25
         n.appendChild(nn)
