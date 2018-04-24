@@ -37,4 +37,6 @@ body, html {
     position: absolute;
     top: 0;
     left: 0;
+    will-change: transform;
+    transform: translateZ(0);
 }
