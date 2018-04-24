@@ -64,8 +64,8 @@
     // Get the elements that are part
     let cont = document.getElementById("container");
     let r = radar(cont, data)
-    window.addEventListener("mousedown", () => r.goto(0))
-    window.addEventListener("touchstart", () => r.goto(0))
+    window.addEventListener("mousedown", function(){ r.goto(0)})
+    window.addEventListener("touchstart",function (){ r.goto(0)})
 </script>
 </body>
 </html>
