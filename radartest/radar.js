@@ -4,6 +4,8 @@ var radar = function (container, data) {
     var curUni, curPlan, curArt;
     var scale = 2.5; // zoom in scaling factor, to big uses loads of GPU memory...
     var positions = {}
+    var garticles = {};
+    var sun;
 
     // fields for moon animations
     let moons = []
@@ -24,7 +26,7 @@ var radar = function (container, data) {
 
         container.innerHtml = ""
         // Create the sun we want to see
-        let sun = document.createElement("div")
+        sun = document.createElement("div")
         sun.className = "sun"
         sun.style.width = sr*2+"px"
         sun.style.height = sr*2+"px"
@@ -42,19 +44,23 @@ var radar = function (container, data) {
 
         data.map(function(uni, i) { cUni(uni, i)})
 
+        let render = 
+
         anim = animate([0,0,scale, 0, 0], function(pos) {
             container.style.transform = "scale("+pos[2]+") rotate("+pos[3]+"deg) translateX("+pos[0]+"px) translateY("+pos[1]+"px) "
+            // shade between the colors of the sun
+            let c1 = [243, 174, 37],
+                c2 = [47, 72, 88]
+            sun.style["background-color"] = colorMixer(c1, c2, pos[3]/180)
             moons.map(it => {
                 if(it.p == moon) {
                     it.dom.style.opacity = 0.001 + (1-0.001)*pos[4]
-                    it.div.style.opacity = 1.0 //1-pos[4]
+                    it.div.style.opacity = 1.0
                 } else {
-                    it.dom.style.opacity = 0.001 //1-pos[4]
-                    it.div.style.opacity = 1 - (1-0.001)*pos[4]//1-pos[4]
+                    it.dom.style.opacity = 0.001
+                    it.div.style.opacity = 1 - (1-0.001)*pos[4]
                 }    
-            
             })
-
         })
         zoom(0)
     }, cUni = function(uni, i) {
@@ -115,6 +121,7 @@ var radar = function (container, data) {
     }, cArt = function(p, art, r, xx, yy) {
         // Built very similar to how we build the planet itself...
         var n = document.createElement("div")
+        garticles[art.id] = art;
 
         let fx = w*ff*0.5 - w*ff*art.fuzz[0]
         let fy = w*ff*0.5 - w*ff*art.fuzz[1]
@@ -184,9 +191,10 @@ var radar = function (container, data) {
             let adom = document.createElement("div")
             adom.className = "articlediv"
             document.body.appendChild(adom)
+            adom.addEventListener("click", e => e.stopPropagation())
 
             let view = moon
-            createArticle(adom, {}, () => {
+            createArticle(adom, garticles[mmoon], () => {
                 console.log("should go back", view);
                 adom.classList.add("articledivOUT")
                 adom.addEventListener("transitionend", e => adom.remove())
@@ -221,12 +229,23 @@ var radar = function (container, data) {
         console.log(e)
     })
     init()
+    zoom(0)
     return {
         goto: zoom,
     }
 }
 
-function createArticle(parent, article, back) {
-    parent.innerHTML = "THIS IS SOME TEXT"
-    window.setTimeout(() => back(), 4000)
+
+function colorChannelMixer(colorChannelA, colorChannelB, amountToMix){
+    var channelA = colorChannelA*amountToMix;
+    var channelB = colorChannelB*(1-amountToMix);
+    return parseInt(channelA+channelB);
+}
+//rgbA and rgbB are arrays, amountToMix ranges from 0.0 to 1.0
+//example (red): rgbA = [255,0,0]
+function colorMixer(rgbA, rgbB, amountToMix){
+    var r = colorChannelMixer(rgbA[0],rgbB[0],amountToMix);
+    var g = colorChannelMixer(rgbA[1],rgbB[1],amountToMix);
+    var b = colorChannelMixer(rgbA[2],rgbB[2],amountToMix);
+    return "rgb("+r+","+g+","+b+")";
 }

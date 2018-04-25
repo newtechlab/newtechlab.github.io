@@ -28,6 +28,17 @@ var layout = function(list) {
         {col: 0, row: 6, x: mrnd.float(), y: mrnd.float()},
         {col: 2, row: 6, x: mrnd.float(), y: mrnd.float()},
         {col: 1, row: 7, x: mrnd.float(), y: mrnd.float()},
+        {col: 0, row: 0, x: mrnd.float(), y: mrnd.float()},
+        {col: 2, row: 0, x: mrnd.float(), y: mrnd.float()},
+        {col: 1, row: 1, x: mrnd.float(), y: mrnd.float()},
+        {col: 0, row: 2, x: mrnd.float(), y: mrnd.float()},
+        {col: 2, row: 2, x: mrnd.float(), y: mrnd.float()},
+        {col: 1, row: 3, x: mrnd.float(), y: mrnd.float()},
+        {col: 0, row: 4, x: mrnd.float(), y: mrnd.float()},
+        {col: 1, row: 5, x: mrnd.float(), y: mrnd.float()},
+        {col: 0, row: 6, x: mrnd.float(), y: mrnd.float()},
+        {col: 2, row: 6, x: mrnd.float(), y: mrnd.float()},
+        {col: 1, row: 7, x: mrnd.float(), y: mrnd.float()},
     ]
     list.map((it, i) => {
         list[i].col = p[i].col

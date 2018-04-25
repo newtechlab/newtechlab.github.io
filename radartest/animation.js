@@ -31,6 +31,7 @@ var animate = function(start, render, m, d) {
 
     return {
         update: function(target) {
+            console.log("update", target)
             tx = target
             if(!drawing) {
                 ct = Date.now()
