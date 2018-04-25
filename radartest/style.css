@@ -73,8 +73,16 @@ img {
     pointer-events: all;
 }
 
-.planet span {
+.planet span {        
     position: absolute;
+    max-width: 7em;
+    padding-left: 0.3em;
+    line-height: 1.1;
+    text-transform: uppercase;
+    transform: translate(-2em, -0.5em);
+    text-align: left;
+    color: #d8d0c0;
+    bottom: 0;
 }
 
 .children {
@@ -158,4 +166,12 @@ svg {
 
 .tit1 img, .tit2 img {
     width: 100px;
+}
+
+span.name::before {
+    content: "PLANET";
+    display: block;
+    font-size: 80%;
+    color: rgb(70,70,70);
+    margin-bottom: 0.25em;
 }

@@ -15,7 +15,7 @@ function createArticle(parent, article, back) {
 
   var logo = document.createElement('img');
   logo.setAttribute('id', 'logo');
-  logo.setAttribute('src', './static/ntl_white.png');
+  logo.setAttribute('src', './static/ntl.png');
   navBar.appendChild(logo);
   backButton.onclick = function() {
     back()

@@ -45,7 +45,7 @@ var radar = function (container, data) {
         tit = document.createElement("div")
         tit.className = "tit2"
         img = document.createElement("img")
-        img.src = "/static/ntl_white.png"
+        img.src = "/static/ntl.png"
         tit.appendChild(img)
         img = document.createElement("div")
         img.innerHTML = "EXPLORING"
@@ -124,6 +124,7 @@ var radar = function (container, data) {
         let txt = document.createElement("span")
         txt.innerHTML = planet.name
         txt.className = "name"
+        txt.style.bottom = "" + ps*(planet.impact*0.6+0.7) + "px"
         n.appendChild(img)
         n.appendChild(txt)
 
@@ -172,6 +173,7 @@ var radar = function (container, data) {
         txt.innerHTML = art.name
         txt.className = "name"
         txt.style["font-size"] = 100/scale + "%"
+        txt.style.bottom = "" + ps/scale + "px"
         n.appendChild(img)
         n.appendChild(txt)
 
