@@ -24,6 +24,10 @@ function createArticle(parent, article, back) {
   var editButton = document.createElement('img');
   editButton.setAttribute('id', 'editButton');
   editButton.setAttribute('src', './static/edit.png');
+  editButton.addEventListener("click", () => {
+    var win = window.open("http://localhost:3000/#!/articles/edit/"+article.id, '_blank');
+    win.focus();
+  })
   navBar.appendChild(editButton);
 
   var ww = document.createElement('div');
