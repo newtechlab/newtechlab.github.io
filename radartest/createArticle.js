@@ -10,7 +10,7 @@ function createArticle(parent, article, back) {
 
   var backButton = document.createElement('img');
   backButton.setAttribute('id', 'backButton');
-  backButton.setAttribute('src', './static/back.png');
+  backButton.setAttribute('src', './static/back2.png');
   navBar.appendChild(backButton);
 
   var logo = document.createElement('img');
@@ -18,17 +18,21 @@ function createArticle(parent, article, back) {
   logo.setAttribute('src', './static/ntl.png');
   navBar.appendChild(logo);
   backButton.onclick = function() {
-    back()
+    back();
   };
 
+  var editButton = document.createElement('img');
+  editButton.setAttribute('id', 'editButton');
+  editButton.setAttribute('src', './static/edit.png');
+  navBar.appendChild(editButton);
 
   var ww = document.createElement('div');
-  ww.className = "topwrapper"
-  parent.appendChild(ww)
+  ww.className = 'topwrapper';
+  parent.appendChild(ww);
 
   var articleImg = document.createElement('img');
   articleImg.setAttribute('id', 'articleImg');
-  articleImg.setAttribute('src', './static/kurs.jpg');
+  articleImg.setAttribute('src', './static/texture4.jpg');
   ww.appendChild(articleImg);
 
   var titleWrapper = document.createElement('div');
@@ -41,11 +45,13 @@ function createArticle(parent, article, back) {
   articleTitle.innerHTML = article.name;
   titleWrapper.appendChild(articleTitle);
 
-  var publishedData = document.createElement('h6');
+  var publishedData = document.createElement('h5');
   var date = new Date(article.lastUpdated);
   publishedData.setAttribute('id', 'publishedDate');
   publishedData.setAttribute('class', 'title');
-  publishedData.innerHTML = 'published ' + (date.getDate() +"."+ date.getMonth() + "." + date.getFullYear());
+  publishedData.innerHTML =
+    'published ' +
+    (date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear());
   titleWrapper.appendChild(publishedData);
 
   var articleContent = document.createElement('div');

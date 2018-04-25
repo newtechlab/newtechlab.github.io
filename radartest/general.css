@@ -1,7 +1,5 @@
-
 body,
 html {
-
   font-family: JandaSafeandSound;
   margin: 0;
   padding: 0;
@@ -10,10 +8,9 @@ html {
 #navBar {
   height: 5.5vh;
   width: 100vw;
-  font-size: 14px; 
+  font-size: 14px;
   background-color: #232122;
   position: relative;
-   
 }
 #backButton {
   position: absolute;
@@ -34,6 +31,14 @@ html {
   margin-right: auto;
   height: 4vh;
   width: 4.4vh;
+}
+
+#editButton {
+  position: absolute;
+  width: 1.5rem;
+  top: 50%;
+  right: 0.5rem;
+  transform: translateY(-50%);
 }
 
 .topwrapper {
