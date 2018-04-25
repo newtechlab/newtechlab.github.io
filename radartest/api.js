@@ -1,39 +1,24 @@
-let api = function(server) {
-
+// Simple wrapper library for accessing the api
+let api = function(host) {
     let getall = () => {
-        var apiRequest1 = fetch(server+"/api/articles",{
-            method: 'GET', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors', // no-cors, cors, *same-origin
-            headers: {
-                "Authorization": "Bearer boller"
-            }
-          }).then(function(response){ 
-            return response.json()});
-        var apiRequest2 = fetch(server+"/api/categories",{
-            method: 'GET', // *GET, POST, PUT, DELETE, etc.
-            mode: 'cors' // no-cors, cors, *same-origin
-          }).then(function(response){
-                    return response.json()
-        });
-        var combinedData = {"apiRequest1":{},"apiRequest2":{}};
-        let res = Promise.all([apiRequest1,apiRequest2]).then(function(values){
-            let data = []
-            let u1 = []
-            let u2 = []
-            values[1].map(c => {
-                if(c.showInDnb) {
-                    u1.push({...c, articles: values[0].filter(it => it.category == c.id)})
-                } else if(c.showInNtl) {
-                    u2.push({...c, articles: values[0].filter(it => it.category == c.id)})
-                }
-            })
-            return [u1, u2]
-        });
-        return res
+        return Promise.all([
+            fetch(host+"/api/articles", { method: 'GET', mode: 'cors'}).then(r => r.json()),
+            fetch(host+"/api/categories", { method: 'GET', mode: 'cors'}).then(r => r.json()),
+            ]).then(values => {
+                let u1 = [], u2 = [];
+                values[1].map(c => {
+                    // TODO: Filter the articles in the views as well, using byNTL and forceShowInDNB
+                    if(c.showInDnb) {
+                        u1.push({...c, articles: values[0].filter(it => it.category == c.id)})
+                    } else if(c.showInNtl) {
+                        u2.push({...c, articles: values[0].filter(it => it.category == c.id)})
+                    }
+                })
+                return [u1, u2]
+            });
     }
-
     return {
         getall: getall,
-        host: server
+        host: host
     }
 }("http://localhost:8080")

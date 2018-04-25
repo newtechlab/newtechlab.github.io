@@ -2,12 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Rotrans demo</title>
-    <script src="layout.js"></script>
+    <title>New Tech Lab - Tech Radar</title>
     <script src="api.js"></script>
-    <script src="rotrans.js"></script>
+    <script src="layout.js"></script>
+    <script src="animation.js"></script>
     <script src="radar.js"></script>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" type="text/css" href="MyFontsWebfontsKit.css"/>
     <meta name="viewport" content="width=device-width">
     <meta name="viewport" content="initial-scale=1.0">
 </head>
@@ -16,8 +17,6 @@
 </div>
 <script>
     api.getall().then(data => {
-        console.log("data", data)
-        // Get the elements that are part
         let cont = document.getElementById("container");
         let r = radar(cont, data)
     })

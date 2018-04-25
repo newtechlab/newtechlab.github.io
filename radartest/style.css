@@ -58,11 +58,19 @@ body, html {
     transform-origin: center top;
     left: 50%;
     transform: translateX(-50%);
+    font-family: JandaSafeandSound;
 }
 
 .planet {
     position: absolute;
     width: 100vw;
+    pointer-events: none;
+}
+
+img {
+    position: relative;
+    z-index: 1;
+    pointer-events: all;
 }
 
 .planet span {
@@ -95,4 +103,37 @@ svg {
   -webkit-backface-visibility: hidden;
   -webkit-transform: translateZ(0) scale(1.0, 1.0);
   transform: translateZ(0);
+}
+
+
+.imgzoom {
+    transform: scale(20);
+    -webkit-transition: transform 1s; /* Safari */
+    transition: transform 1s;
+    transition-timing-function: ease-in;
+}
+
+.articlediv {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y:scroll;
+    background-color: white;
+    z-index: 10;
+    opacity: 0.001;
+}
+
+.articledivIN {
+    opacity: 1.0;
+    transition: opacity 1s;
+    transition-timing-function: ease-in;
+}
+
+.articledivOUT {
+    opacity: 0.001;
+    transition: opacity 1s;
+    transition-timing-function: ease-out;
 }

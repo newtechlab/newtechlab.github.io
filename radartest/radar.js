@@ -18,7 +18,7 @@ var radar = function (container, data) {
         sr = 300;
         radius = sr + 100;
         ps = 75;
-        ff = 0.2
+        ff = 0.1
 
         
 
@@ -83,7 +83,6 @@ var radar = function (container, data) {
             x = -x
             y = -y
         }
-        positions[planet.id] = [x, y, s, r, 1.0]
 
         // add the planet itself
         let img = document.createElement("img")
@@ -92,6 +91,9 @@ var radar = function (container, data) {
         img.id = planet.id
         img.width = ps*(planet.impact*0.6+0.7)
         img.height = ps*(planet.impact*0.6+0.7)
+        img.addEventListener("click", click)
+
+        positions[planet.id] = {pos:[x, y, s, r, 1.0], dom:img}
         let txt = document.createElement("span")
         txt.innerHTML = planet.name
         txt.className = "name"
@@ -107,10 +109,10 @@ var radar = function (container, data) {
             div: n,
         })
         layout(planet.articles)
-        planet.articles.map(function(art){ cArt(childs, art)})
+        planet.articles.map(function(art){ cArt(childs, art, r, x, y)})
         n.appendChild(childs)
         p.appendChild(n)
-    }, cArt = function(p, art) {
+    }, cArt = function(p, art, r, xx, yy) {
         // Built very similar to how we build the planet itself...
         var n = document.createElement("div")
 
@@ -120,12 +122,24 @@ var radar = function (container, data) {
         n.style.top = 40+(art.row*ps*1.5/scale)+fy/scale+"px"
         n.className = "article"      
         
+
+        let x = -0.3*w*(art.col-1)-fx,
+            y = -(art.row*ps*1.5)-fy-h/scale,
+            s = scale;
+        if(r != 0) {
+            x = -x
+            y = -y
+        }
+
         let img = document.createElement("img")
         img.src = api.host + "/api/icon/" + art.id
-        img.className = "plan"
+        img.className = "moon"
         img.id = art.id
         img.width = ps/scale
         img.height = ps/scale
+        img.addEventListener("click", click)
+        positions[art.id] = {pos:[xx+x/scale, yy+y/scale, scale*2, r, 1.0], dom: img}
+        
         let txt = document.createElement("span")
         txt.innerHTML = art.name
         txt.className = "name"
@@ -134,12 +148,15 @@ var radar = function (container, data) {
         n.appendChild(txt)
 
         p.appendChild(n)
-    }, zoom = function(universe, planet){
+    }, zoom = function(universe, planet, mmoon){
         if(universe != undefined) {
+            console.log("zoom universe", planet, positions[planet])
             // movign between universes, figure out the target center position for this one.
             let y = -150*(Math.pow(-1, universe%2))
             curUni = universe
             curPlan = undefined
+            if(curArt)
+                curArt.dom.classList.remove("imgzoom")
             curArt = undefined
             anim.update([0,y, 1, (180*universe)%360, 0])
             return
@@ -148,36 +165,68 @@ var radar = function (container, data) {
             console.log("zoom planet", planet, positions[planet])
             moon = planet
             curPlan = planet
+            if(curArt)
+                curArt.dom.classList.remove("imgzoom")
+                
             curArt = undefined
-            anim.update(positions[planet])            
+            anim.update(positions[planet].pos)
+            return            
+        }
+        if(mmoon != undefined) {
+            console.log("zoom moon", mmoon, positions[mmoon])
+            //moon = planet
+            //curPlan = planet
+            curArt = positions[mmoon]
+            console.log(positions[mmoon].dom)
+            curArt.dom.classList.add("imgzoom")
+
+            // Create the element that we will be using for the markdown and make it all look nice
+            let adom = document.createElement("div")
+            adom.className = "articlediv"
+            document.body.appendChild(adom)
+
+            let view = moon
+            createArticle(adom, {}, () => {
+                console.log("should go back", view);
+                adom.classList.add("articledivOUT")
+                adom.addEventListener("transitionend", e => adom.remove())
+                zoom(undefined, view)
+            })
+            window.setTimeout(() => adom.classList.add("articledivIN"), 100)
+            anim.update(positions[mmoon].pos)
+            return            
         }
     }, click = event => {
-        event.stopPropagation();
-        event.preventDefault();
         // the clicking is simply some sort of state machine, transfering
         // us to the correct location depending on which state we are currently
         // in (viewing universe, planet or article...)
         let t = event.target
-        if(!t) {
-            return
-        }
-        if(t.className == "plan") {
-            // clicked on a planet, always goto that planet
+        console.log("in click", t)
+        if(!t) { return }
+        if(t.className == "plan") {            
+            console.log("clicked planet", t.id)
+            event.stopPropagation();
             return zoom(undefined, t.id)
-        } else if (t.className == "sd") {
-        } else {
-            // Clicked on the outside, if in planet zoom out, else change
-           if(curPlan!= undefined)
-               return zoom(curUni)
-           if(curUni!=undefined)
-               return zoom(curUni+1)
+        } else if (t.className == "moon") {
+            console.log("clicked moon", t.id)
+            event.stopPropagation();
+            return zoom(undefined, undefined, t.id)
         }
     }
 
 
-    window.addEventListener("click", click)
+    window.addEventListener("click", e => {console.log("clicked bg", e); zoom(curUni) } )
+    window.addEventListener("keydown", e => {if(e.keyCode==37||e.keyCode==39){curUni++; zoom(curUni)}})
+    window.addEventListener("wheel", e => {
+        console.log(e)
+    })
     init()
     return {
         goto: zoom,
     }
+}
+
+function createArticle(parent, article, back) {
+    parent.innerHTML = "THIS IS SOME TEXT"
+    window.setTimeout(() => back(), 4000)
 }

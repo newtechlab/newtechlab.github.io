@@ -1,63 +1,38 @@
-// Predictable RNG from SO
+// Predictable RNG from SO - used so we always get the same placement if we will later re-draw
 // https://stackoverflow.com/questions/424292/seedable-javascript-random-number-generator
-function RNG(seed) {
-    // LCG using GCC's constants
-    this.m = 0x80000000; // 2**31;
-    this.a = 1103515245;
-    this.c = 12345;
-  
-    this.state = seed ? seed : 3;
-  }
-  RNG.prototype.nextInt = function() {
+function RNG() {
+    this.m = 0x80000000; this.a = 1103515245; this.c = 12345;
+    this.state = 0;
+}
+RNG.prototype.int = function() {
     this.state = (this.a * this.state + this.c) % this.m;
     return this.state;
-  }
-  RNG.prototype.nextFloat = function() {
-    // returns in range [0,1]
-    return this.nextInt() / (this.m - 1);
-  }
-  RNG.prototype.nextRange = function(start, end) {
-    // returns in range [start, end): including start, excluding end
-    // can't modulu nextInt because of weak randomness in lower bits
-    var rangeSize = end - start;
-    var randomUnder1 = this.nextInt() / this.m;
-    return start + Math.floor(randomUnder1 * rangeSize);
-  }
-  RNG.prototype.choice = function(array) {
-    return array[this.nextRange(0, array.length)];
-  }
+}
+RNG.prototype.float = function() {
+    return this.int() / (this.m - 1);
+}
 var mrnd = new RNG(0)
 
-// Lay out a list of items, based on impact and on distance, one by one.
-// We lay them out in rows of three, to each element in list adding both
-// row and col telling is where they should be positioned, as well as a
-// fuzz value [x,y]
+// Simply do it presciptive, we want it to be reproducible regardless
 var layout = function(list) {
-    let last = 2
-    let row = -1
+    let p = [
+        // TODO: Make this list longer
+        {col: 0, row: 0, x: mrnd.float(), y: mrnd.float()},
+        {col: 2, row: 0, x: mrnd.float(), y: mrnd.float()},
+        {col: 1, row: 1, x: mrnd.float(), y: mrnd.float()},
+        {col: 0, row: 2, x: mrnd.float(), y: mrnd.float()},
+        {col: 2, row: 2, x: mrnd.float(), y: mrnd.float()},
+        {col: 1, row: 3, x: mrnd.float(), y: mrnd.float()},
+        {col: 0, row: 4, x: mrnd.float(), y: mrnd.float()},
+        {col: 1, row: 5, x: mrnd.float(), y: mrnd.float()},
+        {col: 0, row: 6, x: mrnd.float(), y: mrnd.float()},
+        {col: 2, row: 6, x: mrnd.float(), y: mrnd.float()},
+        {col: 1, row: 7, x: mrnd.float(), y: mrnd.float()},
+    ]
     list.map((it, i) => {
-        switch(last) {
-            case 0:
-                last = mrnd.nextRange(0,2)
-                if(last == 0) {
-                    last = 2
-                    list[i].row = row
-                    list[i].col = last
-                    break
-                } else {
-                    last = 2
-                    row++
-                }
-            case 1:
-            case 2:
-                row++ 
-                last = mrnd.nextRange(0,3)
-                list[i].row = row
-                list[i].col = last
-        }
-    })
-    list.map((it,i) => {
-        list[i].fuzz = [mrnd.nextFloat(), mrnd.nextFloat()]
+        list[i].col = p[i].col
+        list[i].row = p[i].row
+        list[i].fuzz = [p[i].x, p[i].y]
     })
 }
 
