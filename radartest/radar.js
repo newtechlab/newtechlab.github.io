@@ -32,6 +32,27 @@ var radar = function (container, data) {
         sun.style.height = sr*2+"px"
         container.appendChild(sun)
 
+        // Create the two titles we will be using
+        let tit = document.createElement("div")
+        tit.className = "tit1"
+        let img = document.createElement("img")
+        img.src = "/static/dnb.png"
+        tit.appendChild(img)
+        img = document.createElement("div")
+        img.innerHTML = "STRATEGY"
+        tit.appendChild(img)
+        sun.appendChild(tit)
+        tit = document.createElement("div")
+        tit.className = "tit2"
+        img = document.createElement("img")
+        img.src = "/static/ntl_white.png"
+        tit.appendChild(img)
+        img = document.createElement("div")
+        img.innerHTML = "EXPLORING"
+        tit.appendChild(img)
+        sun.appendChild(tit)
+
+
         // Create some radar tract
         for(var i = 1; i < 3; i++) { // TODO: This eats ram! D
             let circle = document.createElement("div")

@@ -137,3 +137,25 @@ svg {
     transition: opacity 1s;
     transition-timing-function: ease-out;
 }
+
+.tit1 {
+    position: absolute;
+    bottom: 1em;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+}
+.tit2 {
+    position: absolute;
+    top: 1em;
+    left: 50%;
+    transform: translateX(-50%) rotate(180deg);
+    text-align: center;
+    color: white;
+}
+
+
+.tit1 img, .tit2 img {
+    width: 100px;
+}
