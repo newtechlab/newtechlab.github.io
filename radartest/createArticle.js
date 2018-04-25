@@ -34,7 +34,7 @@ function createArticle(parent, article, back) {
   articleImg.setAttribute('id', 'articleImg');
   articleImg.setAttribute(
     'src',
-    './static/texture' + Math.floor(Math.random() * 5) + '.jpg'
+    './static/texture' + Math.floor(1 + Math.random() * 4) + '.jpg'
   );
   ww.appendChild(articleImg);
 

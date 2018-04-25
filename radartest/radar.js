@@ -104,7 +104,7 @@ var radar = function (container, data) {
         // Store the position we should move to to look at
         // this planet
         let x = -0.3*w*(planet.col-1)-fx,
-            y = -(planet.row*ps*1.5)-fy-h/scale,
+            y = -(planet.row*ps*1.5)-fy-h/scale+50,
             s = scale;
         if(r != 0) {
             x = -x
@@ -173,7 +173,7 @@ var radar = function (container, data) {
         txt.innerHTML = art.name
         txt.className = "name"
         txt.style["font-size"] = 100/scale + "%"
-        txt.style.bottom = "" + ps/scale + "px"
+        txt.style.bottom = 8 + ps/scale + "px"
         n.appendChild(img)
         n.appendChild(txt)
 

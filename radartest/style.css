@@ -83,6 +83,7 @@ img {
     text-align: left;
     color: #d8d0c0;
     bottom: 0;
+    /*z-index: 1;*/
 }
 
 .children {
@@ -136,7 +137,7 @@ svg {
 
 .articledivIN {
     opacity: 1.0;
-    transition: opacity 1s;
+    transition: opacity 0.5s;
     transition-timing-function: ease-in;
 }
 
