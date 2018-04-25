@@ -44,9 +44,7 @@ var radar = function (container, data) {
 
         data.map(function(uni, i) { cUni(uni, i)})
 
-        let render = 
-
-        anim = animate([0,0,scale, 0, 0], function(pos) {
+        let render = function(pos) {
             container.style.transform = "scale("+pos[2]+") rotate("+pos[3]+"deg) translateX("+pos[0]+"px) translateY("+pos[1]+"px) "
             // shade between the colors of the sun
             let c1 = [243, 174, 37],
@@ -61,7 +59,9 @@ var radar = function (container, data) {
                     it.div.style.opacity = 1 - (1-0.001)*pos[4]
                 }    
             })
-        })
+        }
+        render([0,0,scale, 0, 0])
+        anim = animate([0,0,scale, 0, 0], render)
         zoom(0)
     }, cUni = function(uni, i) {
         var n = document.createElement("div")
