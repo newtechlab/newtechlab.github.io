@@ -32,7 +32,10 @@ function createArticle(parent, article, back) {
 
   var articleImg = document.createElement('img');
   articleImg.setAttribute('id', 'articleImg');
-  articleImg.setAttribute('src', './static/texture4.jpg');
+  articleImg.setAttribute(
+    'src',
+    './static/texture' + Math.floor(Math.random() * 5) + '.jpg'
+  );
   ww.appendChild(articleImg);
 
   var titleWrapper = document.createElement('div');
