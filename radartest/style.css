@@ -65,6 +65,8 @@ body, html {
     position: absolute;
     width: 100vw;
     pointer-events: none;
+    will-change: opacity;
+    transform: translateZ(0)
 }
 
 img {
@@ -90,6 +92,7 @@ img {
     position: absolute;
     width: 100vw;
     will-change: opacity;
+    transform: translateZ(0)
 }
 
 .article {

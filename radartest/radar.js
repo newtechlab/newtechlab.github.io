@@ -81,8 +81,8 @@ var radar = function (container, data) {
                 }    
             })
         }
-        render([0,0,scale, 0, 0])
-        anim = animate([0,0,scale, 0, 0], render)
+        render([0,0,scale/scale, 0, 0])
+        anim = animate([0,0,scale/scale, 0, 0], render)
         zoom(0)
     }, cUni = function(uni, i) {
         var n = document.createElement("div")
