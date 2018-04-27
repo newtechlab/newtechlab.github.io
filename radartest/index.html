@@ -21,18 +21,17 @@
 
         #c {
             position: absolute;
-            top: 0;
-            left: 800;
+            top: 0vh;
+            left: 0vw;
             overflow: hidden;
             transform: translateZ(0);
             width: 100vw;
             height: 100vh;
+
         }
 
         .a {
             position: absolute;
-            top: 0;
-            left: 0;
             width: 200px;
             height: 200px;
             font-size: 15px;
@@ -113,7 +112,7 @@
         var elems = [];
         var c = document.getElementById("c")
         for (var i = 0; i < no; i++) {
-            for (var j = 0; j < 10; j++) {
+            for (var j = 0; j < 1; j++) {
                 var gg = document.createElement("div")
                 gg.className = "a"
 
@@ -128,7 +127,7 @@
 
                 gg.appendChild(n)
                 n = document.createElement("p")
-                n.innerHTML = "This is my text"
+                n.innerHTML = "This is my text " + i
                 gg.appendChild(n)
 
                 c.appendChild(gg)
@@ -147,7 +146,7 @@
         var an
         let aa = animate([0, 0, 1, 0, 1], function (pos) {
             for (var i = 0; i < no; i++) {
-                elems[i].dom.style.transform = "scale(" + pos[2] / 1 + ") rotate(" + pos[3] +
+                elems[i].dom.style.transform = "scale(" + pos[2] / pos[2] + ") rotate(" + pos[3] +
                     "deg) translateX(" +
                     (elems[i].pos[0] + pos[0]) / pos[2] + "px) translateY(" + (elems[i].pos[1] + pos[1]) / pos[
                         2] + "px) "
@@ -155,7 +154,9 @@
             }
         })
         an = function () {
-            aa.update([Math.random() * 50, Math.random() * 50, 0.5 + 2 * Math.random(), Math.random() * 18, Math.random()])
+            aa.update([-200 + Math.random() * 150, Math.random() * 50, 0.5 + 2 * Math.random(), Math.random() * 18,
+                Math.random()
+            ])
             window.setTimeout(an, 500)
         }
         an()
