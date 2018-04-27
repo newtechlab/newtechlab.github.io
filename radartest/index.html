@@ -132,6 +132,7 @@
         // every 2 seconds randomize new pos where they should go
         var an
         let aa = animate([0, 0, 1, 0, 1], function (pos) {
+            console.log("render")
             for (var i = 0; i < no; i++) {
                 elems[i].dom.style.transform = "scale(" + pos[2] + ") rotate(" + pos[3] + "deg) translateX(" +
                     (elems[i].pos[0] + pos[0]) / pos[2] + "px) translateY(" + (elems[i].pos[1] + pos[1]) / pos[
