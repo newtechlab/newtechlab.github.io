@@ -57,9 +57,9 @@
             start = Array.isArray(start) ? start : [start];
             m = m || 0.06;
             d = d || 7;
-            var x = [...start],
+            var x = [start],
                 v = start.map(d => 0.0),
-                tx = [...start];
+                tx = [start];
             var draw, ct = Date.now(),
                 drawing = false;
             draw = function (now) {
