@@ -45,12 +45,8 @@
             params[match[1]] = match[2];
         }
 
-        console.log(params)
-
         var no = params["no"] || 100;
         var svg = params["svg"] == true ? true : false
-
-
 
         // A small vector enabled animation library we use to get "force like" behaviour
         var animate = function (start, render, m, d) {
@@ -141,10 +137,7 @@
             }
         })
         an = function () {
-            aa.update([Math.random() * 50, Math.random() * 50, 0.5 + 4 * Math.random(), Math.random() * 18,
-                Math
-                .random()
-            ])
+            aa.update([Math.random() * 50, Math.random() * 50, 0.5 + 4 * Math.random(), Math.random() * 18, Math.random()])
             window.setTimeout(an, 500)
         }
         an()
