@@ -11,6 +11,7 @@
         html {
             margin: 0;
             padding: 0;
+            transform: translateZ(0);
         }
 
         #c {
@@ -36,6 +37,21 @@
 <body>
     <div id="c"></div>
     <script>
+        var regex = /[?&]([^=#]+)=([^&#]*)/g,
+            url = window.location.href,
+            params = {},
+            match;
+        while (match = regex.exec(url)) {
+            params[match[1]] = match[2];
+        }
+
+        console.log(params)
+
+        var no = params["no"] || 100;
+        var svg = params["svg"] == true ? true : false
+
+
+
         // A small vector enabled animation library we use to get "force like" behaviour
         var animate = function (start, render, m, d) {
             start = Array.isArray(start) ? start : [start];
@@ -83,19 +99,30 @@
 
 
 
-        var no = 100;
         var elems = [];
         var c = document.getElementById("c")
         for (var i = 0; i < no; i++) {
+            var gg = document.createElement("div")
+            gg.className = "a"
+
             var n = document.createElement("img")
-            n.src = "https://upload.wikimedia.org/wikipedia/commons/6/67/Firefox_Logo%2C_2017.svg"
-            n.src = "https://upload.wikimedia.org/wikipedia/commons/6/67/Firefox_Logo%2C_2017.svg"
+            if (svg) {
+                n.src = "https://upload.wikimedia.org/wikipedia/commons/6/67/Firefox_Logo%2C_2017.svg"
+            } else {
+                n.src = "https://upload.wikimedia.org/wikipedia/commons/d/d2/Firefox_Logo%2C_2017.png"
+            }
             n.width = "100"
             n.height = "100"
-            n.className = "a"
-            c.appendChild(n)
+
+            gg.appendChild(n)
+            n = document.createElement("p")
+            n.innerHTML = "This is my text"
+            gg.appendChild(n)
+
+            c.appendChild(gg)
+
             elems.push({
-                dom: n,
+                dom: gg,
                 pos: [200 + Math.random() * 500, Math.random() * 500],
             })
         }
