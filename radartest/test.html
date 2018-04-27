@@ -12,13 +12,21 @@
             height: 100vh;
             position: absolute;
         }
+
+        html,
+        body {
+            touch-action: none;
+        }
     </style>
 </head>
 
 <body>
 
     <h1>
-        Thou shalt not scroll or zoom!
+        Thou shalt not scroll or zoom! ddd
+        <p ontouchstart="window.alert(234)">
+            HEJ
+        </p>
     </h1>
     <script>
         function attachHandler(object, event, callback) {
