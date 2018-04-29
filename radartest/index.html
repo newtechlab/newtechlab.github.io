@@ -31,7 +31,7 @@
         }
 
         .a {
-            position: absolute;
+            position: fixed;
             width: 200px;
             height: 200px;
             font-size: 15px;
@@ -45,6 +45,36 @@
 <body>
     <div id="c"></div>
     <script>
+        function attachHandler(object, event, callback) {
+            if (!object || !event || !callback) {
+                return;
+            }
+            if (object.addEventListner) {
+                object.addEventListener(event, callback);
+            } else if (object.attachEvent) {
+                object.attachEvent("on" + event, callback);
+            } else {
+                object["on" + event] = callback;
+            }
+        }
+
+        var keyboardEvents = ["keydown", "keyup", "keypress"];
+        var mouseEvents = ["mousedown", "mouseup", "mousemove", "mousewheel"];
+        var touchEvents = ["touchstart", "touchmove", "touchend", "touchcancel", "touchforcechange"];
+        var gestureEvents = ["gesturestart", "gesturechange", "gestureend"];
+        var customEvents = ["scroll", "zoom", "orientationchange"];
+
+        var events = keyboardEvents.concat(mouseEvents, touchEvents, gestureEvents, customEvents);
+        events.forEach(function (e) {
+            attachHandler(document, e, function (evt) {
+                evt.preventDefault();
+                evt.stopPropagation();
+                console.log("Stopped: " + e, e.target);
+                return false;
+            });
+        });
+    </script>
+    <script>
         var regex = /[?&]([^=#]+)=([^&#]*)/g,
             url = window.location.href,
             params = {},
@@ -52,6 +82,9 @@
         while (match = regex.exec(url)) {
             params[match[1]] = match[2];
         }
+
+        let X = 0,
+            Y = 0
 
         var no = params["no"] || 100;
         var svg = params["svg"] == true ? true : false
@@ -148,8 +181,8 @@
             for (var i = 0; i < no; i++) {
                 elems[i].dom.style.transform = "scale(" + pos[2] / pos[2] + ") rotate(" + pos[3] +
                     "deg) translateX(" +
-                    (elems[i].pos[0] + pos[0]) / pos[2] + "px) translateY(" + (elems[i].pos[1] + pos[1]) / pos[
-                        2] + "px) "
+                    (elems[i].pos[0] + pos[0] + X) / pos[2] + "px) translateY(" + (elems[i].pos[1] + pos[1] + Y) /
+                    pos[2] + "px) "
                 elems[i].dom.style.opacity = pos[4]
             }
         })
@@ -161,6 +194,43 @@
         }
         an()
         console.log("should start")
+
+        let moving = false
+        let lx = undefined,
+            ly = undefined
+        let start = e => {
+            console.log("STARTING")
+            moving = true
+            lx = e.clientX
+            ly = e.clientY
+        }
+        let move = e => {
+            if (moving) {
+                if (lx && ly) {
+                    X += e.clientX - lx
+                    Y += e.clientY - ly
+                    console.log("moving", X, Y)
+                }
+                lx = e.clientX
+                ly = e.clientY
+            }
+        }
+        let end = e => {
+            console.log("ENDING")
+            moving = false
+            lx = undefined
+            ly = undefined
+        }
+
+
+        // Simple "move" with fingers to simulat that and look at performance
+        let b = document.body;
+        b.addEventListener("touchstart", start)
+        b.addEventListener("mousedown", start)
+        b.addEventListener("touchmove", move)
+        b.addEventListener("mousemove", move)
+        b.addEventListener("touchend", end)
+        b.addEventListener("mouseup", end)
     </script>
 </body>
 
