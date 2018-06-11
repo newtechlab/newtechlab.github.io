@@ -55,7 +55,7 @@
 </head>
 <body>
   <img class="img" src="/img/egg_hunter.png"/>
-  <p>This small for-fun-hacking exercise is inspired by a classical buffer-overflow method by a name similar to the avatar above. The task is to find the hidden email (see also <a href="https://you.newtechlab.wtf">you.newtechlab.wtf</a>. You may step-wise add more and more tips for what to do below. Don't show them all at once!</p>
+  <p>This small, for-fun-hacking, exercise is inspired by a classical buffer-overflow method by a name similar to the avatar above. The task is to find the hidden email (see <a href="https://you.newtechlab.wtf">you.newtechlab.wtf</a>). You may step-wise add more and more tips for what to do below. Don't show them all at once!</p>
   <p>Read the tips <em>carefully</em> to make it easier for you.</p>
   <div id="level0">
     <h3>Level 0 - (close to impossible)</h3>
@@ -66,7 +66,7 @@
       <li>You can use javascript in the editor below.</li>
       <li>Each time you click run simulations a "new" virtual server will be created, so you may do multiple requests after each other in the editor but no state will be persisted between different "Run simulation".</li>
     </ul>
-    <button onclick="this.parentNode.removeChild(this); document.getElementById('level1').style.display = 'block'">Give me more guidance</button>
+    <button onclick="this.parentNode.removeChild(this); document.getElementById('level1').style.display = 'block'">Give me more guidance, I did not yet manage</button>
   </div>
     
   <div id="level1">
@@ -79,7 +79,7 @@
       <li>Also, you know that somewhere in the memory a function is stored that can be used to write a response back to the client, being a function that takes a single string as argument and sends it back over the network to the client. There is also a function stored that can be used to execute arbitrary memory as javascript code.</li>
       <li>Finally, you know that there is a function available in memory that can extract the email from a database, if called with one argument and one argument only. That argument must <b>exactly</b> equal "SELECT uniqueuserid,userEmail FROM newtechlabusersandadmins LEFT JOIN allDnbEmployeesAndConsultantsInOslo ON newtechlabusersandadmins.uniqueuserid = allDnbEmployeesAndConsultantsInOslo.uniqueuserid;" to return the desired email.</li>
     </ul>
-    <button onclick="this.parentNode.removeChild(this); document.getElementById('level2').style.display = 'block'">Give me more guidance</button>
+    <button onclick="this.parentNode.removeChild(this); document.getElementById('level2').style.display = 'block'">Give me more guidance, I did not yet manage</button>
 </div>
 
   <div id="level2">
@@ -94,7 +94,7 @@ print(send(prefix("read(5)(read(19))")));
               </pre>
           </li>
         </ul>
-    <button onclick="this.parentNode.removeChild(this); document.getElementById('level3').style.display = 'block'">Give me more guidance</button>
+    <button onclick="this.parentNode.removeChild(this); document.getElementById('level3').style.display = 'block'">Give me more guidance, I did not yet manage</button>
 </div>
 
 
@@ -105,7 +105,7 @@ print(send(prefix("read(5)(read(19))")));
               <li>You can find the method for executing an arbitrary memory range as javascript code at memory location 4. This function accepts two signatures, either <em>exec(string)</em> or <em>exec(memStart, memEnd)</em> where the second signature will interpret the memory locations between memStart and memEnd as a single character each, concatenating them into a string representing the javascript code. It will fail if non-string variables are stored in the memory range.</li>
               <li>The server apparently stores previous requests as memory-range strings (see item above) at random memory ranges.</li>
             </ul>
-    <button onclick="this.parentNode.removeChild(this); document.getElementById('level4').style.display = 'block'">Give me more guidance</button>
+    <button onclick="this.parentNode.removeChild(this); document.getElementById('level4').style.display = 'block'">Give me more guidance, I did not yet manage</button>
 </div>
 
 
@@ -128,7 +128,7 @@ print(send(prefix("read(5)('this is the second request')")));
                     </pre>               
             </li>
             </ul>
-    <button onclick="this.parentNode.removeChild(this); document.getElementById('level5').style.display = 'block'">Give me more guidance</button>
+    <button onclick="this.parentNode.removeChild(this); document.getElementById('level5').style.display = 'block'">Give me more guidance, I did not yet manage</button>
 </div>
 
         <div id="level5">
@@ -136,7 +136,7 @@ print(send(prefix("read(5)('this is the second request')")));
                 <ul>
                     <li>Use the debug console and the source code of this page to either reverse-engineer the code to find the email or to allow yourself better debugging information on the "server" side using e.g. console.log in the code sent to the server.</li>
                 </ul>
-    <button onclick="this.parentNode.removeChild(this); document.getElementById('level6').style.display = 'block'">Give me more guidance</button>
+    <button onclick="this.parentNode.removeChild(this); document.getElementById('level6').style.display = 'block'">Give me more guidance, I did not yet manage</button>
 </div>
             <div id="level6">
                     <h3>Level 6- (Easy)</h3>
