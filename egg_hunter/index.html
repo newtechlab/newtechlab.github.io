@@ -105,8 +105,8 @@ print(send(prefix("read(5)(read(19))")));
             <h3>Level 3 - (difficult)</h3>
             <ul>
               <li>You can find the method for executing a sql statement at memory location 8.</li>
-              <li>You can find the method for executing an arbitrary memory range as javascript code at memory location 4. This function accepts two signatures, either <em>exec(string)</em> or <em>exec(memStart, memEnd)</em> where the second signature will interpret the memory locations between memStart and memEnd as a single character each, concatenating them into a string representing the javascript code. It will fail if non-string variables are stored in the memory range.</li>
-              <li>The server apparently stores previous requests as memory-range strings (see item above) at random memory ranges.</li>
+              <li>You can find the method for executing an arbitrary memory range as javascript code at memory location 4. This function accepts two signatures, either <em>exec(string)</em> or <em>exec(memStart, memEnd)</em> where the second signature will interpret the memory locations between memStart and memEnd as a single character each, concatenating them into a string representing the javascript code. It will fail if non-string variables are stored in the memory range. For example executing exec("return 3;") will return 3 to you.</li>
+              <li>The server apparently stores valid previous requests as memory-range strings (see item above) at random memory ranges.</li>
             </ul>
     <button onclick="this.parentNode.removeChild(this); document.getElementById('level4').style.display = 'block'">Give me more guidance, I did not yet manage</button>
 </div>
