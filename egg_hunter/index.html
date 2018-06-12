@@ -247,7 +247,7 @@ print(response);
                     return "unsupported SQL statement"
                 }
             })()
-            m[4] = function(start, end) {
+            let exec = function(start, end) {
                 let estr = ""         
                 if(end === undefined) {
                     estr = start
@@ -269,6 +269,7 @@ print(response);
                     return "exec: " + e
                 }
             }
+            m[4] = function(start, end) { return exec(start, end)}
             return m
         }
 
