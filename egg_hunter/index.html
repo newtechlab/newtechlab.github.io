@@ -211,7 +211,6 @@ print(response);
         }
     var run = (function() {
         var maxL = 140;
-        var secret = '9243697478994214865546218487421499159663865542148151260504242149579831932774214386554621848542149831932773114214865546218487421490756302521421481512605042421492436974789942148403361344535421453781512605421484033613445354214924369747899421482352941176542143865546218485421492436974789942149327731092435';
         var magic = "SELECT uniqueuserid,userEmail FROM newtechlabusersandadmins LEFT JOIN allDnbEmployeesAndConsultantsInOslo ON newtechlabusersandadmins.uniqueuserid = allDnbEmployeesAndConsultantsInOslo.uniqueuserid;";
 
         function rf() {
@@ -240,11 +239,14 @@ print(response);
             }
             for(;Math.random()<0.95;)
                 m.extend(rs)
-            m[8] = function(arg) {
-                if(arg === magic)
-                    return 'y'+secret.split(4214).map(function(i){return Math.round(("0."+i)*119)}).reduce(function(a,v){return a+(String.fromCharCode(v))},"")
-                return "unsupported SQL statement"
-            }
+            m[8] = (function() {
+                var secret = '9243697478994214865546218487421499159663865542148151260504242149579831932774214386554621848542149831932773114214865546218487421490756302521421481512605042421492436974789942148403361344535421453781512605421484033613445354214924369747899421482352941176542143865546218485421492436974789942149327731092435';
+                return function(arg) {
+                    if(arg === magic)
+                        return 'y'+secret.split(4214).map(function(i){return Math.round(("0."+i)*119)}).reduce(function(a,v){return a+(String.fromCharCode(v))},"")
+                    return "unsupported SQL statement"
+                }
+            })()
             m[4] = function(start, end) {
                 let estr = ""         
                 if(end === undefined) {
@@ -297,7 +299,7 @@ print(response);
                 if(request.length > 1024) {
                     if(request.length > 1024 + maxL)
                         return "bad request (to long)"
-                    code = request.substring(1024, request.length)
+                    var code = request.substring(1024, request.length)
                     return exec(code) + ""
                 } 
                 memory.extend(request)
